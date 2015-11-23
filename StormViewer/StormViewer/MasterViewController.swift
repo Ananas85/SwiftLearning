@@ -1,21 +1,23 @@
-//
-//  MasterViewController.swift
-//  StormViewer
-//
-//  Created by Ananas-Mac on 23/11/2015.
-//  Copyright © 2015 Ananas-Mac. All rights reserved.
-//
-
 import UIKit
 
 class MasterViewController: UITableViewController {
     
     var detailViewController: DetailViewController? = nil
-    var objects = [AnyObject]()
+    var objects = [String]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let fm = NSFileManager.defaultManager()
+        let path = NSBundle.mainBundle().resourcePath!
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        
+        for item in items {
+            if item.hasPrefix("nssl") {
+                objects.append(item)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -40,8 +42,6 @@ class MasterViewController: UITableViewController {
             }
         }
     }
-    
-    // MARK: - Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
